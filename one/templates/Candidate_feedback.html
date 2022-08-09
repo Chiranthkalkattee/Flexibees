@@ -7,6 +7,7 @@
 <h1>Create a Post </h1>
 <form action="" method="POST">
 {% csrf_token %}
+    <div style="b">
 Client_name: <input type="text" name="Client_name"/><br/>
 Roles: <input type="text" name="Roles"/><br/>
 BD_manager: <input type="text" name="BD_manager"/><br/>
@@ -14,6 +15,7 @@ Recruiter: <input type="text" name="Recruiter"/><br/>
 candidate_name: <input type="text" name="candidate_name"/><br/>
 selection: <input type="text" name="selection"/><br/>
 <input type="submit" value="Post"/>
+        </div>
 </form>
 </body>
 

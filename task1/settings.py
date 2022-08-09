@@ -38,14 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'one',
-    'import_export'
+    'crispy_forms',
+    'task2',
+    'three'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -77,7 +79,7 @@ WSGI_APPLICATION = 'task1.wsgi.application'
 
 DATABASES={
    'default':{
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
+      'ENGINE': 'django.db.backends.postgresql_psycopg2',
       'NAME':'task1',
       'USER':'postgres',
       'PASSWORD':'1234',
@@ -126,3 +128,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'chiranth.hj@appinessworld.com'
+EMAIL_HOST_PASSWORD = '524cs15007'
+
+
+
+# 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
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'chiranthkalkattee@gmail.com'
+# EMAIL_HOST_PASSWORD = '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'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True

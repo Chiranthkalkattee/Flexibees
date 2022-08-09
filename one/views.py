@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from .models import Candidate_feedback_report
 from .serializers import Serializers
-from .forms import MyForm
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import csv
+from django.core.mail import EmailMessage
+from django.conf import settings
+from .forms import SendMailForm
+from django.views import View
 # Create your views here.
 
 def Candidate_report(request):
@@ -46,6 +49,7 @@ def Candidate_report(request):
 #     print('hello')
 #     return render(request,'Candidate_feedback.html'),
 
+
 def Candidate_list(request):
     if request.method =='GET':
         data = Candidate_feedback_report.objects.all()
@@ -62,3 +66,37 @@ def export_to_csv(request):
     for candidate in fields:
         write.writerow(candidate)
     return response
+
+
+def simple_send_mail(request):
+    if request.method == 'POST':
+        fm = SendMailForm(request.POST or None, request.FILES or None)
+        if fm.is_valid():
+            subject = fm.cleaned_data['subject']
+            message = fm.cleaned_data['msg']
+            from_mail = request.user.email
+            to_mail = fm.cleaned_data['email_id']
+            to_cc = fm.cleaned_data['email_cc']
+            to_bcc = fm.cleaned_data['email_bcc']
+            attach = fm.cleaned_data['attachment']
+            if from_mail and to_mail:
+                try:
+                    mail = EmailMessage(subject=subject, body=message, from_email=from_mail, to=[to_mail], bcc=[to_bcc],
+                                        cc=[to_cc]
+                                        )
+                    mail.attach(attach.name, attach.read(), attach.content_type)
+                    mail.send()
+                # except Exception as ex:
+                except ArithmeticError as aex:
+                    print(aex.args)
+                    return HttpResponse('Invalid header found')
+                return HttpResponseRedirect('/mail/thanks/')
+            else:
+                return HttpResponse('Make sure all fields are entered and valid.')
+    else:
+        fm = SendMailForm()
+    return render(request, 'mailattachment.html', {'fm': fm})
+
+
+def thank_you(request):
+    return render(request,'thankyou.html')
