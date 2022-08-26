@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand,CommandError
-from ...models import Employee_details
+from parse.models import Employee_details
 
 
 class Command(BaseCommand):

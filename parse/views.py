@@ -1,14 +1,8 @@
 from django.shortcuts import render
-from .models import Employee_details
+from .models import Employee_details, New_Employee
 from django.http import HttpResponse,response
 import csv
-
-
-
-
-
-
-
+ 
 def export_to_csv(request):
     Candidate = Employee_details.objects.all()
     response = HttpResponse('text/csv')
@@ -20,7 +14,16 @@ def export_to_csv(request):
         write.writerow(candidate)
     return response
 
-
+def export_to_csv1(request):
+    Candidate = New_Employee.objects.all()
+    response = HttpResponse('text/csv')
+    response['Content-Disposition'] = 'attachment; filename=New_Employee_email.csv'
+    write =csv.writer(response)
+    write.writerow(['Email'])
+    fields=Candidate.values_list("Email")
+    for candidate in fields:
+        write.writerow(candidate)
+    return response
 
 
 
